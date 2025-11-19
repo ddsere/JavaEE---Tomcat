@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>My Web Container</h1>
+<p>This is a sample web container</p>
+
+<button id="btn">Click Me</button>
+
+<p id="load-data"></p>
+
+<script src="jquery-3.7.1.min.js"></script>
+<script>
+
+    /*var http = new XMLHttpRequest();
+    http.open("GET", "http://localhost:8080/Day1_Web_exploded/customer");
+    http.send();*/
+
+    $("#btn").on("click", function () {
+        // Using jQuery AJAX
+        $.ajax({
+            url: "http://localhost:8080/Day1_Web_exploded/hello",
+            method: "GET",
+            dataType: "json",
+            success: function (response) {
+                alert(response);
+            },
+            error: function (xhr, status, error) {
+                console.log("Error occurred while fetching data:");
+            },
+        });
+    });
+</script>
+</body>
+</html>
