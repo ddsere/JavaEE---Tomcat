@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer form</title>
+
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+        table {
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+
+</head>
+<body>
+<h1>Customer form</h1>
+<div>
+    <input type="text" id="cid" placeholder="Enter your Id">
+    <input type="text" id="cname" placeholder="Enter your Name">
+    <input type="text" id="caddress" placeholder="Enter your Address">
+    <button id="save-customer">Save</button>
+</div>
+<button id="get-all-customers">GetAll</button>
+<div id="content">
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Address</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        </tbody>
+    </table>
+</div>
+
+<script src="jquery-3.7.1.min.js"> </script>
+<script>
+    $('#save-customer').click(function(){
+
+        var cid=$('#cid').val();
+        var cname=$('#cname').val();
+        var caddress=$('#caddress').val();
+
+        $.ajax({
+            url:"http://localhost:8080/Day2_Sample_App_Web_exploded/customer?id="+cid+"&name="+cname+"&address="+caddress,
+            method:'POST',
+            success:function(response){
+                console.log(response);
+            },
+            error:function(){
+                console.log('Error occurred while fetching data.');
+            }
+        })
+    });
+    $('#get-all-customers').click(function(){
+        $.ajax({
+            url:"http://localhost:8080/Day2_Sample_App_Web_exploded/customer",
+            method:'GET',
+            success:function(response){
+                console.log(response);
+                $('#tbody').append(response)
+            },
+            error:function(){
+                console.log('Error occurred while fetching data.');
+            }
+        })
+    });
+</script>
+</body>
+</html>
