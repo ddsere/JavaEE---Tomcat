@@ -55,9 +55,11 @@
             url:"http://localhost:8080/Day2_Sample_App_Web_exploded/customer?id="+cid+"&name="+cname+"&address="+caddress,
             method:'POST',
             success:function(response){
+                alert(response);
                 $('#cid').val('');
                 $('#cname').val('');
                 $('#caddress').val('');
+                $('#get-all-customers').click();
                 console.log(response);
             },
             error:function(){
