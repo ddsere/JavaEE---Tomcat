@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer</title>
+</head>
+<body>
+<h1>Customer</h1>
+<div id="nav">
+    <button onclick="window.location.href = 'pages/item.html'">Items</button>
+    <button onclick="window.location.href = 'pages/order.html'">Orders</button>
+    <button onclick="window.location.href = '../index.html'">Home</button>
+</div>
+<br>
+<div>
+    <input type="text" id="cid" placeholder="ID"></input>
+    <input type="text" id="cname" placeholder="Name"></input>
+    <input type="text" id="caddress" placeholder="Address"></input>
+</div>
+<br>
+<div>
+    <button onclick="saveCustomer()">Save</button>
+    <button onclick="updateCustomer()">Update</button>
+    <button onclick="deleteCustomer()">Delete</button>
+</div>
+<br>
+<div id="customers">
+    <table id="customerTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Address</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+<script src="../assests/js/jquery-3.7.1.min.js"></script>
+<script>
+    function saveCustomer() {
+        var cid = $("#cid").val();
+        var cname = $("#cname").val();
+        var caddress = $("#caddress").val();
+        alert("Customer Saved"+cid+" "+cname+" "+caddress);
+    }
+
+    function updateCustomer() {
+        alert("Customer Updated");
+    }
+
+    function deleteCustomer() {
+        alert("Customer Deleted");
+    }
+
+    function getAllCustomers() {
+        alert("GetAll Customers");
+    }
+
+    window.onload = function () {
+        getAllCustomers();
+    }
+</script>
+</body>
+</html>
