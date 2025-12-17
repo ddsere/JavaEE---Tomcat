@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer form</title>
+
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+        table {
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+
+</head>
+<body>
+<h1>Customer form</h1>
+<div>
+    <input type="text" id="cid" placeholder="Enter your Id">
+    <input type="text" id="cname" placeholder="Enter your Name">
+    <input type="text" id="caddress" placeholder="Enter your Address">
+    <button id="save-customer">Save</button>
+    <button id="update-customer">Update</button>
+</div>
+<button id="get-all-customers">GetAll</button>
+<div id="content">
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        </tbody>
+    </table>
+</div>
+
+<script src="jquery-3.7.1.min.js"> </script>
+<script>
+    $('#save-customer').click(function(){
+
+        var cid=$('#cid').val();
+        var cname=$('#cname').val();
+        var caddress=$('#caddress').val();
+
+        $.ajax({
+            url:"http://localhost:8080/Day4_Sample_App2_Web_exploded/api/v1/customer?id="+cid+"&name="+cname+"&address="+caddress,
+            method:'POST',
+            success:function(response){
+                alert(response);
+                $('#cid').val('');
+                $('#cname').val('');
+                $('#caddress').val('');
+                $('#get-all-customers').click();
+                console.log(response);
+            },
+            error:function(){
+                console.log('Error occurred while fetching data.');
+            }
+        })
+    });
+
+    $('#get-all-customers').click(function(){
+        $.ajax({
+            url:"http://localhost:8080/Day4_Sample_App2_Web_exploded/api/v1/customer",
+            method:'GET',
+            success:function(response){
+                console.log(response);
+                $('#tbody').empty();
+                $('#tbody').append(response);
+            },
+            error:function(){
+                console.log('Error occurred while fetching data.');
+            }
+        })
+    });
+
+    $(document).on("click", ".delete-customer", function () {
+        var row = $(this).closest("tr");
+        var id = row.find("td:eq(0)").text();
+
+        $.ajax({
+            url: "http://localhost:8080/Day4_Sample_App2_Web_exploded/api/v1/customer?id=" + id,
+            method: "DELETE",
+            success: function (response) {
+                alert(response);
+                row.remove();
+            },
+            error: function () {
+                alert("Delete failed!");
+            }
+        });
+
+    });
+
+    $(document).on("click", ".edit-customer", function () {
+        var row = $(this).closest("tr");
+        var id = row.find("td:eq(0)").text();
+        var name = row.find("td:eq(1)").text();
+        var address = row.find("td:eq(2)").text();
+
+        $('#cid').val(id);
+        $('#cname').val(name);
+        $('#caddress').val(address);
+    });
+
+    $('#update-customer').click(function(){
+
+        var cid=$('#cid').val();
+        var cname=$('#cname').val();
+        var caddress=$('#caddress').val();
+
+        $.ajax({
+            url:"http://localhost:8080/Day4_Sample_App2_Web_exploded/api/v1/customer?id="+cid+"&name="+cname+"&address="+caddress,
+            method:'PUT',
+            data: {
+                id: cid,
+                name: cname,
+                address: caddress
+            },
+            success:function(response){
+                alert(response);
+                $('#cid').val('');
+                $('#cname').val('');
+                $('#caddress').val('');
+                $('#get-all-customers').click();
+            },
+            error:function(){
+                alert('Update failed!');
+            }
+        });
+    });
+
+
+</script>
+</body>
+</html>
